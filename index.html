@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A scrollytelling data story about space launches from 2017 to June 2026." />
+  <title>1,700+ Missions — Space Launches 2017–2026</title>
+  <link rel="stylesheet" href="style.css?v=1.0" />
+</head>
+<body>
+  <div class="stars" aria-hidden="true"></div>
+
+  <header class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow">MAKEOVER MONDAY · 2026 WEEK 26</p>
+      <h1><span>1,700+</span> missions.<br>A decade of space launches.</h1>
+      <p class="dek">From January 2017 to June 2026, launch activity accelerated dramatically. Scroll to trace the changing rhythm of access to orbit, then continue into the trend, geography, and outcome behind the story.</p>
+      <p class="scroll-cue">Scroll to explore <span>↓</span></p>
+    </div>
+  </header>
+
+  <main>
+    <section class="scrolly" id="launch-story">
+      <div class="visual-wrap">
+        <div class="visual-header">
+          <div>
+            <p class="kicker">GLOBAL LAUNCH ACTIVITY</p>
+            <h2 id="visual-title">1,723 launches, six geopolitical groups</h2>
+          </div>
+          <div class="period" id="period-label">2017–2026</div>
+        </div>
+
+        <div id="fan-chart" class="fan-chart" role="img" aria-label="Fan chart showing space launches by date and geopolitical country group"></div>
+
+        <div class="legend" id="legend"></div>
+      </div>
+
+      <div class="steps">
+        <article class="step is-active" data-mode="all" data-title="1,723 launches, six geopolitical groups" data-period="2017–2026">
+          <p class="step-number">01</p>
+          <h3>Every line is one mission</h3>
+          <p>Each curve starts from a geopolitical country group and lands on the upper arc according to launch date. Together, the lines reveal the rhythm of a decade.</p>
+        </article>
+
+        <article class="step" data-mode="year" data-year="2020" data-title="The decade begins at a steadier pace" data-period="2017–2020">
+          <p class="step-number">02</p>
+          <h3>A steadier opening</h3>
+          <p>Through 2020, annual launch counts remained close to 100–115 missions. The fan is still relatively sparse.</p>
+        </article>
+
+        <article class="step" data-mode="year" data-year="2022" data-title="Launch cadence starts to accelerate" data-period="2017–2022">
+          <p class="step-number">03</p>
+          <h3>The cadence accelerates</h3>
+          <p>By 2022, launches had climbed to 186 in a single year, and the upper arc begins to fill much more rapidly.</p>
+        </article>
+
+        <article class="step" data-mode="year" data-year="2025" data-title="2025 becomes the busiest year in the data" data-period="2017–2025">
+          <p class="step-number">04</p>
+          <h3>A new launch tempo</h3>
+          <p>Activity surged again in 2023–2025, reaching 330 recorded launches in 2025 — more than three times the 2017 count.</p>
+        </article>
+
+        <article class="step" data-mode="group" data-group="United States" data-title="The United States accounts for 761 missions" data-period="44% of launches">
+          <p class="step-number">05</p>
+          <h3>The United States leads</h3>
+          <p>With 761 missions, the United States represents the largest share of launches in this period. Hover over any highlighted line to inspect the individual mission.</p>
+        </article>
+
+        <article class="step" data-mode="group" data-group="China" data-title="China follows with 522 missions" data-period="30% of launches">
+          <p class="step-number">06</p>
+          <h3>China follows</h3>
+          <p>China recorded 522 missions, forming the second-densest stream in the fan and reinforcing the increasingly concentrated launch landscape.</p>
+        </article>
+
+        <article class="step" data-mode="all" data-title="One decade, 1,723 missions" data-period="2017–Jun 2026">
+          <p class="step-number">07</p>
+          <h3>The full picture</h3>
+          <p>Return all six groups and the decade resolves into a dense web: a visual record of how dramatically launch activity expanded.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="chapter chapter-trend" id="trend-section">
+      <div class="chapter-copy">
+        <p class="kicker">READING THE TREND</p>
+        <h2>Launch activity did not just broaden — it accelerated.</h2>
+        <p>The ArcFlow chart is strongest at showing density and timing. The annual bars make the underlying growth easier to read: launches hovered around one hundred a year at the beginning of the period, then rose sharply after 2021.</p>
+        <p class="chapter-note" id="trend-note">Peak activity came in 2025, while 2026 remains a partial year in this dataset.</p>
+      </div>
+      <div class="chart-card">
+        <div class="chart-card-header">
+          <div>
+            <p class="kicker">ANNUAL LAUNCHES</p>
+            <h3>Year by year</h3>
+          </div>
+          <div class="mini-stat" id="peak-year-stat">—</div>
+        </div>
+        <div id="annual-chart" class="mini-chart" role="img" aria-label="Bar chart showing annual launches from 2017 to 2026"></div>
+      </div>
+    </section>
+
+    <section class="chapter chapter-map reverse" id="map-section">
+      <div class="chart-card map-card">
+        <div class="chart-card-header">
+          <div>
+            <p class="kicker">LAUNCH GEOGRAPHY</p>
+            <h3>Where launches took place</h3>
+          </div>
+          <div class="mini-stat" id="site-stat">—</div>
+        </div>
+        <div id="map-chart" class="mini-chart map-chart" role="img" aria-label="World map showing launch sites by location and frequency"></div>
+      </div>
+      <div class="chapter-copy">
+        <p class="kicker">ADDING GEOGRAPHY</p>
+        <h2>Launches cluster around a relatively small number of sites.</h2>
+        <p>A true world map provides geographic context, while launch-site markers show where missions took place. Marker colour uses the same geopolitical groups as the ArcFlow chart, and marker size reflects launch volume.</p>
+        <p class="chapter-note">The largest clusters sit at Kennedy / Cape Canaveral and Vandenberg in the United States, with major Chinese, Russian, New Zealand, and European sites also shaping the global pattern.</p>
+      </div>
+    </section>
+
+    <section class="chapter chapter-outcome" id="outcome-section">
+      <div class="chapter-copy">
+        <p class="kicker">CLOSING WITH OUTCOME</p>
+        <h2>Most missions were successful, but the failures still matter.</h2>
+        <p>The last view closes the story on outcome. It compresses the decade into a simple result profile: overwhelmingly successful overall, with a smaller set of failures and pad aborts.</p>
+        <p class="chapter-note" id="outcome-note">This section works best as a concise ending rather than a major exploratory view.</p>
+      </div>
+      <div class="chart-card outcome-card">
+        <div class="chart-card-header">
+          <div>
+            <p class="kicker">LAUNCH OUTCOME</p>
+            <h3>Mission result</h3>
+          </div>
+          <div class="mini-stat" id="success-rate-stat">—</div>
+        </div>
+        <div id="outcome-chart" class="mini-chart" role="img" aria-label="Horizontal bars showing counts by launch outcome"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <span>#MakeoverMonday 2026 Week 26</span>
+      <span>Viz: Iris Sun</span>
+      <span>Data: Voronoi</span>
+    </div>
+  </footer>
+
+  <div class="tooltip" id="tooltip" aria-hidden="true"></div>
+
+  <script src="script.js?v=1.0"></script>
+</body>
+</html>
