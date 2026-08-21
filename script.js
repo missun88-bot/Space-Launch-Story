@@ -195,7 +195,7 @@ function buildMapChart(data) {
   wrap.appendChild(svg);
 
   const mapImage = svgEl('image', {
-    href: 'assets/world-map.svg?v=1.0',
+    href: 'world-map.svg?v=1.0',
     x: 0,
     y: 0,
     width: w,
@@ -280,7 +280,7 @@ function buildOutcomeChart(data) {
 }
 
 async function init() {
-  const response = await fetch('data/launches.csv');
+  const response = await fetch('launches.csv');
   if (!response.ok) throw new Error(`CSV load failed: ${response.status}`);
   const raw = parseCSV(await response.text());
   const data = raw.map(d => ({
@@ -473,6 +473,6 @@ init().catch(err => {
   const msg = document.createElement('div');
   msg.style.padding = '30px';
   msg.style.color = '#ffb4b4';
-  msg.textContent = 'Could not load the local CSV. Start the local-only server with: py -m http.server 8000 --bind 127.0.0.1';
+  msg.textContent = 'Could not load launches.csv. Please check that the data file is in the same folder as index.html.';
   chart.appendChild(msg);
 });
