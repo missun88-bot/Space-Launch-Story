@@ -559,3 +559,11 @@ body {
   .footer-inner span { display: block; }
   .footer-inner span + span::before { content: none; }
 }
+
+/* Mobile-only ArcFlow performance safeguard */
+@media (max-width: 640px) {
+  .fan-chart .launch-path {
+    mix-blend-mode: normal !important;
+    transition: none !important;
+  }
+}
