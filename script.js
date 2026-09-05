@@ -295,24 +295,56 @@ async function init() {
   const counts = new Map(GROUP_ORDER.map(g => [g, 0]));
   data.forEach(d => counts.set(d['Country Group'], (counts.get(d['Country Group']) || 0) + 1));
 
-  const vbW = 1200, vbH = 720;
-  const svg = svgEl('svg', { viewBox: `0 0 ${vbW} ${vbH}`, preserveAspectRatio: 'xMidYMin meet' });
-  chart.appendChild(svg);
-  const x = scaleLinear(-1.06, 1.06, 55, 1145);
-  const y = scaleLinear(-0.19, 1.07, 690, 48);
+ const isMobile = window.matchMedia('(max-width: 640px)').matches;
 
-  function datePoint(date) {
-    const t = (date - minDate) / (maxDate - minDate);
-    const angle = (START_ANGLE - (START_ANGLE - END_ANGLE) * t) * Math.PI / 180;
-    return { x: Math.cos(angle), y: Math.sin(angle), t, angle };
-  }
-  function pathFor(d) {
-    const sx = START_X[d['Country Group']];
-    const ep = datePoint(d.date);
-    const c1x = sx * 0.60;
-    const c2x = ep.x * 0.85;
-    return `M${x(sx)},${y(START_Y)} C${x(c1x)},${y(CONTROL_Y)} ${x(c2x)},${y(CONTROL_Y)} ${x(ep.x)},${y(ep.y)}`;
-  }
+/* Phone-only ArcFlow geometry.
+   Desktop geometry below remains exactly as before. */
+const MOBILE_START_X = {
+  "Russia/Soviet Union": -0.92,
+  "United States": -0.56,
+  "China": -0.18,
+  "NATO Ally": 0.18,
+  "Major Non-NATO Ally": 0.56,
+  "Other": 0.92
+};
+
+const startXFor = group =>
+  isMobile ? MOBILE_START_X[group] : START_X[group];
+
+const startY = isMobile ? -0.10 : START_Y;
+const controlY = isMobile ? 0.55 : CONTROL_Y;
+
+const vbW = isMobile ? 420 : 1200;
+const vbH = isMobile ? 560 : 720;
+
+const svg = svgEl('svg', {
+  viewBox: `0 0 ${vbW} ${vbH}`,
+  preserveAspectRatio: 'xMidYMin meet'
+});
+chart.appendChild(svg);
+
+const x = isMobile
+  ? scaleLinear(-1.06, 1.06, 18, 402)
+  : scaleLinear(-1.06, 1.06, 55, 1145);
+
+const y = isMobile
+  ? scaleLinear(-0.32, 1.07, 530, 28)
+  : scaleLinear(-0.19, 1.07, 690, 48);
+
+function datePoint(date) {
+  const t = (date - minDate) / (maxDate - minDate);
+  const angle = (START_ANGLE - (START_ANGLE - END_ANGLE) * t) * Math.PI / 180;
+  return { x: Math.cos(angle), y: Math.sin(angle), t, angle };
+}
+
+function pathFor(d) {
+  const sx = startXFor(d['Country Group']);
+  const ep = datePoint(d.date);
+  const c1x = sx * 0.60;
+  const c2x = ep.x * 0.85;
+
+  return `M${x(sx)},${y(startY)} C${x(c1x)},${y(controlY)} ${x(c2x)},${y(controlY)} ${x(ep.x)},${y(ep.y)}`;
+}
 
   let guideD = '';
   for (let i = 0; i <= 100; i++) {
@@ -351,24 +383,67 @@ async function init() {
   });
 
   const maxCount = Math.max(...counts.values());
-  const radius = c => 16 + Math.sqrt(c / maxCount) * 32;
-  const anchors = svgEl('g', { class: 'anchors' });
-  svg.appendChild(anchors);
-  const anchorItems = [];
 
-  GROUP_ORDER.forEach(group => {
-    const r = radius(counts.get(group) || 0);
-    const g = svgEl('g', { class: 'anchor', 'data-group': group, transform: `translate(${x(START_X[group])},${y(START_Y)})` });
-    const circle = svgEl('circle', { class: 'anchor-circle', r, fill: COLORS[group], stroke: COLORS[group] });
-    const core = svgEl('circle', { class: 'anchor-core', r: 4, fill: COLORS[group] });
-    const label = svgEl('text', { class: 'anchor-label', y: r + 21 });
-    label.textContent = group === 'Russia/Soviet Union' ? 'Russia / Soviet Union' : group;
-    const count = svgEl('text', { class: 'anchor-count', y: r + 39 });
-    count.textContent = fmtNumber(counts.get(group) || 0);
-    g.append(circle, core, label, count);
-    anchors.appendChild(g);
-    anchorItems.push({ group, g, circle, core, texts: [label, count] });
+const radius = c => isMobile
+  ? 7 + Math.sqrt(c / maxCount) * 12
+  : 16 + Math.sqrt(c / maxCount) * 32;
+
+const anchors = svgEl('g', { class: 'anchors' });
+svg.appendChild(anchors);
+const anchorItems = [];
+
+GROUP_ORDER.forEach(group => {
+  const r = radius(counts.get(group) || 0);
+
+  const g = svgEl('g', {
+    class: 'anchor',
+    'data-group': group,
+    transform: `translate(${x(startXFor(group))},${y(startY)})`
   });
+
+  const circle = svgEl('circle', {
+    class: 'anchor-circle',
+    r,
+    fill: COLORS[group],
+    stroke: COLORS[group]
+  });
+
+  const core = svgEl('circle', {
+    class: 'anchor-core',
+    r: isMobile ? 3 : 4,
+    fill: COLORS[group]
+  });
+
+  const label = svgEl('text', {
+    class: 'anchor-label',
+    y: r + (isMobile ? 16 : 21)
+  });
+
+  label.textContent = isMobile
+    ? (
+        group === 'Russia/Soviet Union'
+          ? 'Russia / Soviet'
+          : group === 'Major Non-NATO Ally'
+            ? 'Major non-NATO'
+            : group
+      )
+    : (
+        group === 'Russia/Soviet Union'
+          ? 'Russia / Soviet Union'
+          : group
+      );
+
+  const count = svgEl('text', {
+    class: 'anchor-count',
+    y: r + (isMobile ? 29 : 39)
+  });
+
+  count.textContent = fmtNumber(counts.get(group) || 0);
+
+  g.append(circle, core, label, count);
+  anchors.appendChild(g);
+  anchorItems.push({ group, g, circle, core, texts: [label, count] });
+});
 
   const legend = document.querySelector('#legend');
   const legendItems = [];
